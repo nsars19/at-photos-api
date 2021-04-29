@@ -49,4 +49,23 @@ app.get("/photos/:id", async (req, res) => {
   const photo = await Photo.findById(id);
   res.send(photo);
 });
+
+app.get("/photos/like/:id", async (req, res) => {
+  const { id } = req.params;
+  const photo = await Photo.findById(id);
+  photo.likes = photo.likes + 1;
+  photo.save();
+
+  res.send(photo);
+});
+
+app.get("/photos/unlike/:id", async (req, res) => {
+  const { id } = req.params;
+  const photo = await Photo.findById(id);
+  photo.likes = photo.likes - 1;
+  photo.save();
+
+  res.send(photo);
+});
+
 module.exports = app;
