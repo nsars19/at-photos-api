@@ -47,7 +47,6 @@ app.get("/photos/:id", async (req, res) => {
   const { id } = req.params;
 
   const photo = await Photo.findById(id).populate("likes");
-  console.log(photo);
   res.send(photo);
 });
 module.exports = app;
