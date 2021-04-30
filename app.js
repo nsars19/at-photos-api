@@ -4,6 +4,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
 const { getFileStream } = require("./s3");
+const Photo = require("./models/photo");
+const Comment = require("./models/comment");
 
 // Setup MongoDB & Mongoose
 const mongoose = require("mongoose");
@@ -22,8 +24,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
-
-const Photo = require("./models/photo");
 
 app.get("/", (req, res, next) => {
   next();
