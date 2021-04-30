@@ -37,7 +37,7 @@ app.get("/images/:key", (req, res) => {
   readStream.pipe(res);
 });
 
-// The 'index' route for the app. Uses photos are a URI to be RESTful
+// The 'index' route for the app. Uses photos as a URI to be RESTful
 app.get("/photos", async (req, res) => {
   const photos = await Photo.find({});
   res.send(photos);
