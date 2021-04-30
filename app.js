@@ -68,4 +68,19 @@ app.get("/photos/unlike/:id", async (req, res) => {
   res.send(photo);
 });
 
+app.post("/comments", async (req, res) => {
+  const { id, text } = req.body;
+
+  const comment = new Comment({ text: text });
+  await comment.save();
+
+  const photo = await Photo.findByIdAndUpdate(
+    id,
+    { $push: { comments: comment._id } },
+    { new: true }
+  ).populate("comments");
+
+  res.send(photo);
+});
+
 module.exports = app;
