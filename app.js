@@ -5,7 +5,6 @@ const logger = require("morgan");
 const cors = require("cors");
 const { getFileStream } = require("./s3");
 const Photo = require("./models/photo");
-const Comment = require("./models/comment");
 
 // Setup MongoDB & Mongoose
 const mongoose = require("mongoose");
@@ -64,21 +63,6 @@ app.get("/photos/unlike/:id", async (req, res) => {
   const photo = await Photo.findById(id);
   photo.likes = photo.likes - 1;
   photo.save();
-
-  res.send(photo);
-});
-
-app.post("/comments", async (req, res) => {
-  const { id, text } = req.body;
-
-  const comment = new Comment({ text: text });
-  await comment.save();
-
-  const photo = await Photo.findByIdAndUpdate(
-    id,
-    { $push: { comments: comment._id } },
-    { new: true }
-  ).populate("comments");
 
   res.send(photo);
 });
